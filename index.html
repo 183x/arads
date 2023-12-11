@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #login-container {
+            background-color: #fff;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #333;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="login-container">
+        <h2>Arads経営管理サイト</h2>
+
+        <form id="loginForm">
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="button" onclick="checkCredentials()">ログイン</button>
+        </form>
+    </div>
+
+    <script>
+        function checkCredentials() {
+            var enteredId = document.getElementById("id").value;
+            var enteredPassword = document.getElementById("password").value;
+            var correctId = "arads334"; // ここに設定したいIDを入力
+            var correctPassword = "88572945"; // ここに設定したいパスワードを入力
+
+            if (enteredId === correctId && enteredPassword === correctPassword) {
+                alert("ログインが完了しました");
+                openNewTab("https://x.com/ExtraBattle"); // ログイン成功後のURLを指定
+            } else {
+                alert("ID、パスワードが間違っています。");
+            }
+        }
+
+        function openNewTab(url) {
+            var win = window.open(url, '_blank');
+            win.focus();
+        }
+    </script>
+
+</body>
+
+</html>
