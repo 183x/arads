@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
         body {
@@ -13,7 +12,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         #login-container {
             background-color: #fff;
             max-width: 400px;
@@ -22,24 +21,24 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         h2 {
             color: #333;
         }
-        
+
         label {
             display: block;
             margin-bottom: 8px;
             color: #555;
         }
-        
+
         input {
             width: 100%;
             padding: 8px;
             margin-bottom: 16px;
             box-sizing: border-box;
         }
-        
+
         button {
             background-color: #4caf50;
             color: #fff;
@@ -48,13 +47,23 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        
+
         button:hover {
             background-color: #45a049;
         }
+
+        #error-message {
+            color: red;
+            margin-top: -10px; /* 見た目の微調整 */
+            margin-bottom: 10px;
+        }
+
+        #last-access-time {
+            margin-top: 10px;
+            color: #555;
+        }
     </style>
 </head>
-
 <body>
 
     <div id="login-container">
@@ -66,23 +75,29 @@
             <br>
             <label for="password">パスワード:</label>
             <input type="password" id="password" name="password" required>
+            <div id="error-message"></div> <!-- エラーメッセージ表示用の要素 -->
             <br>
             <button type="button" onclick="checkCredentials()">ログイン</button>
         </form>
+
+        <div id="last-access-time"></div> <!-- 最後にアクセスした時間表示用の要素 -->
+
     </div>
 
     <script>
         function checkCredentials() {
             var enteredId = document.getElementById("id").value;
             var enteredPassword = document.getElementById("password").value;
-            var correctId = "arads334"; // ここに設定したいIDを入力
-            var correctPassword = "88572945"; // ここに設定したいパスワードを入力
+            var correctId = "arads334";
+            var correctPassword = "88572945"; 
+            var errorMessageElement = document.getElementById("error-message");
 
             if (enteredId === correctId && enteredPassword === correctPassword) {
-                alert("ログインが完了しました");
+                alert("ログインしました。");
+                setLastAccessTime();
                 openNewTab("https://line.me/R/ti/g/osmTRHeKs6"); // ログイン成功後のURLを指定
             } else {
-                alert("ID、パスワードが間違っています。");
+                errorMessageElement.textContent = "IDまたはパスワードが正しくありません";
             }
         }
 
@@ -90,8 +105,34 @@
             var win = window.open(url, '_blank');
             win.focus();
         }
+
+        function setLastAccessTime() {
+            var now = new Date();
+            var lastAccessTime = now.toLocaleString();
+            document.getElementById("last-access-time").textContent = "最終ログイン: " + lastAccessTime;
+            document.cookie = "lastAccessTime=" + encodeURIComponent(lastAccessTime);
+        }
+
+        // ページ読み込み時にCookieから最後のアクセス時間を表示
+        window.onload = function () {
+            var lastAccessTime = getCookie("lastAccessTime");
+            if (lastAccessTime) {
+                document.getElementById("last-access-time").textContent = "最終ログイン: " + decodeURIComponent(lastAccessTime);
+            }
+        };
+
+        // Cookieから値を取得する関数
+        function getCookie(name) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
     </script>
 
 </body>
-
 </html>
