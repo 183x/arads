@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン</title>
+    <title>Login</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -54,7 +54,7 @@
 
         #error-message {
             color: red;
-            margin-top: -10px;
+            margin-top: -10px; /* 見た目の微調整 */
             margin-bottom: 10px;
         }
 
@@ -75,12 +75,12 @@
             <br>
             <label for="password">パスワード:</label>
             <input type="password" id="password" name="password" required>
-            <div id="error-message"></div>
+            <div id="error-message"></div> <!-- エラーメッセージ表示用の要素 -->
             <br>
             <button type="button" onclick="checkCredentials()">ログイン</button>
         </form>
 
-        <div id="last-access-time"></div>
+        <div id="last-access-time"></div> <!-- 最後にアクセスした時間表示用の要素 -->
 
     </div>
 
@@ -89,15 +89,15 @@
             var enteredId = document.getElementById("id").value;
             var enteredPassword = document.getElementById("password").value;
             var correctId = "arads334";
-            var correctPassword = "88572945";
+            var correctPassword = "88572945"; 
             var errorMessageElement = document.getElementById("error-message");
 
             if (enteredId === correctId && enteredPassword === correctPassword) {
                 alert("ログインしました。");
                 setLastAccessTime();
-                openNewTab("https://line.me/R/ti/g/osmTRHeKs6");
+                openNewTab("https://line.me/R/ti/g/osmTRHeKs6"); // ログイン成功後のURLを指定
             } else {
-                errorMessageElement.textContent = "IDまたはパスワードが正しくありません。";
+                errorMessageElement.textContent = "IDまたはパスワードが正しくありません";
             }
         }
 
@@ -107,43 +107,21 @@
         }
 
         function setLastAccessTime() {
-            updateLastAccessTime(); // 最初に1回更新
-            setInterval(updateLastAccessTime, 60000); // 1分ごとに更新
-        }
-
-        function updateLastAccessTime() {
             var now = new Date();
-            var lastAccessTime = new Date();
-            document.getElementById("last-access-time").textContent = "最終ログイン: " + formatRelativeTime(lastAccessTime);
-            document.cookie = "lastAccessTime=" + encodeURIComponent(lastAccessTime.toISOString());
+            var lastAccessTime = now.toLocaleString();
+            document.getElementById("last-access-time").textContent = "最終ログイン: " + lastAccessTime;
+            document.cookie = "lastAccessTime=" + encodeURIComponent(lastAccessTime);
         }
 
-        function formatRelativeTime(lastAccessTime) {
-            var now = new Date();
-            var diff = now - lastAccessTime;
-            var seconds = Math.floor(diff / 1000);
-            var minutes = Math.floor(seconds / 60);
-            var hours = Math.floor(minutes / 60);
-            var days = Math.floor(hours / 24);
-
-            if (days > 0) {
-                return days + " 日前";
-            } else if (hours > 0) {
-                return hours + " 時間前";
-            } else if (minutes > 0) {
-                return minutes + " 分前";
-            } else {
-                return seconds + " 秒前";
-            }
-        }
-
+        // ページ読み込み時にCookieから最後のアクセス時間を表示
         window.onload = function () {
             var lastAccessTime = getCookie("lastAccessTime");
             if (lastAccessTime) {
-                document.getElementById("last-access-time").textContent = "最終ログイン: " + formatRelativeTime(new Date(lastAccessTime));
+                document.getElementById("last-access-time").textContent = "最終ログイン: " + decodeURIComponent(lastAccessTime);
             }
         };
 
+        // Cookieから値を取得する関数
         function getCookie(name) {
             var cookies = document.cookie.split(';');
             for (var i = 0; i < cookies.length; i++) {
